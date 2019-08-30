@@ -1,0 +1,23 @@
+function [good,bad] = FK(nilai)
+
+%nilai(i) = xlsread('KMA.xls', 2, 'C3:C54');
+  nmax = max(nilai);
+  nmin = min(nilai);
+    
+  q2 = median (nilai);
+  good=zeros (50,1);
+  bad=zeros(50,1);
+ for i=1:50
+    
+if nilai(i,1)>=nmin && nilai(i,1)<q2
+    good(i,1)=0;
+    %modnilai(i)=0;
+    bad(i,1)=-((nilai(i,1)-nmin)/(q2-nmin))-1;
+elseif nilai(i,1)>=q2 && nilai(i,1)<=nmax
+    good(i,1)=(nilai(i,1)-q2)/(nmax-q2);
+    %modnilai(i)=(nilai(i)-nmin)/(q1-nmin);
+    bad(i,1)=0;
+end;
+ end
+end
+

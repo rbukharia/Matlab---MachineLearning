@@ -1,0 +1,43 @@
+clear;
+clc;
+disp('Fuzzy system');
+disp('1. data 2011');
+disp('2. data 2012');
+i=input('Pilihan : ');
+disp('Harap tunggu...');
+
+kmk = xlsread ('KMA.xls', i, 'C3:C52');
+kpm = xlsread ('KMA.xls', i, 'D3:D52');
+its = xlsread ('KMA.xls', i, 'E3:E52');
+kjs = xlsread ('KMA.xls', i, 'F3:F52');
+lyl = xlsread ('KMA.xls', i, 'G3:G52');
+dsp = xlsread ('KMA.xls', i, 'H3:H52');
+
+[goodkmk,badkmk]=FK(kmk);
+[goodkpm,badkpm]=FK(kpm);
+[goodits,badits]=FK(its);
+[goodkjs,badkjs]=FK(kjs);
+[goodlyl,badlyl]=FK(lyl);
+[gooddsp,baddsp]=FK(dsp);
+
+xlswrite('KMA.xls',goodkmk,4,'A1:A50');
+xlswrite('KMA.xls',badkmk,4,'B1:B50');
+xlswrite('KMA.xls',goodkpm,4,'C1:C50');
+xlswrite('KMA.xls',badkpm,4,'D1:D50');
+xlswrite('KMA.xls',goodits,4,'E1:E50');
+xlswrite('KMA.xls',badits,4,'F1:F50');
+xlswrite('KMA.xls',goodkjs,4,'G1:G50');
+xlswrite('KMA.xls',badkjs,4,'H1:H50');
+xlswrite('KMA.xls',goodlyl,4,'I1:I50');
+xlswrite('KMA.xls',badlyl,4,'J1:J50');
+xlswrite('KMA.xls',gooddsp,4,'K1:K50');
+xlswrite('KMA.xls',baddsp,4,'L1:L50');
+dka = xlsread('KMA.xls',4,'A1:L50');
+
+[nores,yesres]=fuzzyresult(goodkmk,badkmk,goodkpm,badkpm,goodits,badits,goodkjs,badkjs,goodlyl,badlyl,gooddsp,baddsp);
+[hasil]= score (nores,yesres);
+
+xlswrite('KMA.xls',hasil,i,'J3:J52');
+
+disp('selesai');
+disp('silahkan liat file KMA.xls');
